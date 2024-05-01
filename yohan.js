@@ -148,8 +148,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // 팝업창에 뒤로가기 버튼 추가
         popup.document.body.innerHTML += '<button onclick="window.close()" style="position: absolute; bottom: 10px; right: 10px;">뒤로가기</button>';
-        // 주소창 숨기기
-        popup.document.body.style.overflow = 'hidden';
+        
     }
 
     // HOME 버튼 클릭 시 처음화면으로 돌아가는 함수
