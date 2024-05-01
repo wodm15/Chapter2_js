@@ -1,3 +1,4 @@
+/* yohan.css */
 /* 페이지 폰트 */
 body {
     font-family: Arial, sans-serif;
@@ -101,3 +102,38 @@ header {
 #homeButton:hover {
     background-color: #00478f;
 }
+
+/* 팝업 박스 */
+#popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+/* 팝업 내부 콘텐츠 */
+.popup-content {
+    text-align: center;
+}
+
+/* 팝업 닫기 버튼 */
+.close {
+    color: #ccc;
+    float: right;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+

@@ -1,4 +1,3 @@
-// async
 document.addEventListener('DOMContentLoaded', async function () {
     const searchInput = document.getElementById('searchInput');
     const searchButton = document.getElementById('searchButton');
@@ -121,11 +120,36 @@ document.addEventListener('DOMContentLoaded', async function () {
         movieCard.appendChild(image);
         movieCard.appendChild(movieInfo);
 
-        movieCard.addEventListener('click', () => {
+        // 영화 프로필 사진 클릭 시 해당 영화 ID만 표시
+        image.addEventListener('click', () => {
             alert(`해당 영화 ID: ${movie.id}`);
         });
 
+        // 상세페이지 버튼
+        const detailButton = document.createElement('button');
+        detailButton.textContent = '상세페이지';
+        detailButton.classList.add('detailButton');
+        detailButton.addEventListener('click', () => {
+            openDetailPage(movie.id);
+        });
+        movieInfo.appendChild(detailButton);
+
         return movieCard;
+    }
+
+    // 상세페이지 열기
+    function openDetailPage(movieId) {
+        const width = 600;
+        const height = 400;
+        const left = (window.innerWidth - width) / 2;
+        const top = (window.innerHeight - height) / 2;
+        const popup = window.open("", "_blank", `width=${width},height=${height},left=${left},top=${top},location=no`);
+        popup.document.write('<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>상세페이지</title></head><body></body></html>');
+
+        // 팝업창에 뒤로가기 버튼 추가
+        popup.document.body.innerHTML += '<button onclick="window.close()" style="position: absolute; bottom: 10px; right: 10px;">뒤로가기</button>';
+        // 주소창 숨기기
+        popup.document.body.style.overflow = 'hidden';
     }
 
     // HOME 버튼 클릭 시 처음화면으로 돌아가는 함수
