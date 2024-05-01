@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', async function () {
+    // 필요한 요소들을 가져옴
     const searchInput = document.getElementById('searchInput');
     const searchButton = document.getElementById('searchButton');
     const movieContainer = document.getElementById('movieContainer');
-    const apiKey = '74ff6e1f9c4702bf2cdb221fbfb25dd1'; // 여기에 TMDB API 키를 넣어주세요
-    const homeButton = document.getElementById('homeButton'); // HOME 버튼 추가
+    const apiKey = '74ff6e1f9c4702bf2cdb221fbfb25dd1';
+    const homeButton = document.getElementById('homeButton');
+    const popup = document.getElementById('popup');
 
-    // 페이지 로드 시 검색 입력란에 포커스를 주고 텍스트를 선택함
+    // 검색 입력란에 포커스 설정
     searchInput.focus();
     searchInput.select();
 
@@ -17,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             const response = await fetch(apiUrl);
             const data = await response.json();
             if (data && data.results) {
-                displayMovies(data.results); // API 응답에서 결과 부분만 사용하여 영화 목록을 화면에 표시
+                displayMovies(data.results);
             } else {
                 console.error('Invalid data format:', data);
             }
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    // 검색 버튼 클릭 시 영화 검색 실행
+    // 검색 버튼 클릭 시 이벤트 처리
     searchButton.addEventListener('click', async () => {
         const query = searchInput.value;
         if (query.trim() !== '') {
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     });
 
-    // Enter 키로 검색할 수 있도록 이벤트리스너 추가
+    // 검색 입력란에서 Enter 키 입력 시 이벤트 처리
     searchInput.addEventListener('keypress', async function (event) {
         if (event.key === 'Enter') {
             const query = searchInput.value;
@@ -48,10 +50,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     });
 
-    // 처음화면에서는 인기 영화를 보여줌
+    // 최고 평점 영화 가져오기
     await fetchTopRatedMovies();
 
-    // 처음 화면에 보여주는 인기 영화를 가져오는 함수
     async function fetchTopRatedMovies() {
         const options = {
             method: 'GET',
@@ -65,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options);
             const data = await response.json();
             if (data && data.results) {
-                displayMovies(data.results); // API 응답에서 결과 부분만 사용하여 영화 목록을 화면에 표시
+                displayMovies(data.results);
             } else {
                 console.error('Invalid data format:', data);
             }
@@ -74,29 +75,17 @@ document.addEventListener('DOMContentLoaded', async function () {
         }
     }
 
-    // 영화 정보를 카드 형식으로 화면에 보여주는 함수
+    // 영화 목록 표시
     function displayMovies(movies) {
-        // 이전에 표시된 영화 카드들 제거
         movieContainer.innerHTML = '';
 
-        // 검색된 영화 목록만 표시
         movies.forEach(movie => {
             const movieCard = createMovieCard(movie);
             movieContainer.appendChild(movieCard);
         });
-
-        // 영화 목록에서 가장 평점이 높은 영화를 찾아 화면에 표시
-        const highestRatedMovie = movies.reduce((prev, current) => (prev.vote_average > current.vote_average) ? prev : current);
-        const highestRatedMovieCard = createMovieCard(highestRatedMovie);
-        movieContainer.appendChild(highestRatedMovieCard);
-
-        // 영화 목록 중에서 제목이 'The'로 시작하는 영화만 필터링하여 화면에 표시
-        const filteredMovies = movies.filter(movie => movie.title.startsWith('The'));
-        const filteredMovieCards = filteredMovies.map(movie => createMovieCard(movie));
-        filteredMovieCards.forEach(card => movieContainer.appendChild(card));
     }
 
-    // 영화 카드를 생성하는 함수
+    // 영화 카드 생성
     function createMovieCard(movie) {
         const movieCard = document.createElement('div');
         movieCard.classList.add('movieCard');
@@ -120,40 +109,48 @@ document.addEventListener('DOMContentLoaded', async function () {
         movieCard.appendChild(image);
         movieCard.appendChild(movieInfo);
 
-        // 영화 프로필 사진 클릭 시 해당 영화 ID만 표시
         image.addEventListener('click', () => {
-            alert(`해당 영화 ID: ${movie.id}`);
+            openPopup(movie.id);
         });
-
-        // 상세페이지 버튼
-        const detailButton = document.createElement('button');
-        detailButton.textContent = '상세페이지';
-        detailButton.classList.add('detailButton');
-        detailButton.addEventListener('click', () => {
-            openDetailPage(movie.id);
-        });
-        movieInfo.appendChild(detailButton);
 
         return movieCard;
     }
 
-    // 상세페이지 열기
-    function openDetailPage(movieId) {
-        const width = 600;
-        const height = 400;
-        const left = (window.innerWidth - width) / 2;
-        const top = (window.innerHeight - height) / 2;
-        const popup = window.open("", "_blank", `width=${width},height=${height},left=${left},top=${top},location=no`);
-        popup.document.write('<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>상세페이지</title></head><body></body></html>');
+    // 팝업 열기
+    function openPopup(movieId) {
+        popup.style.display = 'block';
 
-        // 팝업창에 뒤로가기 버튼 추가
-        popup.document.body.innerHTML += '<button onclick="window.close()" style="position: absolute; bottom: 10px; right: 10px;">뒤로가기</button>';
-        
+        const popupTitle = document.getElementById('popupTitle');
+        const popupReleaseDate = document.getElementById('popupReleaseDate');
+        const popupGenres = document.getElementById('popupGenres');
+        const popupOverview = document.getElementById('popupOverview');
+
+        // 영화 상세 정보 가져오기
+        const movieDetailsUrl = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}&language=en-US`;
+        fetch(movieDetailsUrl)
+            .then(response => response.json())
+            .then(data => {
+                popupTitle.textContent = data.title;
+                popupReleaseDate.textContent = " " + data.release_date;
+                popupGenres.textContent = " " + data.genres.map(genre => genre.name).join(', ');
+                popupOverview.textContent = " " + data.overview;
+            })
+            .catch(error => {
+                console.error('Error fetching movie details:', error);
+            });
     }
 
-    // HOME 버튼 클릭 시 처음화면으로 돌아가는 함수
+    // 팝업 닫기
+    function closePopup() {
+        popup.style.display = 'none';
+    }
+
+    // HOME 버튼 클릭 시 이벤트 처리
     homeButton.addEventListener('click', async () => {
-        // 초기화면으로 돌아가는 기능 추가
         await fetchTopRatedMovies();
     });
+
+    // X 버튼 클릭 시 팝업 닫기
+    const closePopupButton = document.querySelector('.close'); // X 버튼을 가져옴
+    closePopupButton.addEventListener('click', closePopup); // X 버튼에 이벤트 핸들러 추가
 });

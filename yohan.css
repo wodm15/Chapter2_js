@@ -1,5 +1,4 @@
 /* yohan.css */
-/* 페이지 폰트 */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -7,7 +6,6 @@ body {
     padding: 0;
 }
 
-/* 페이지의 상단 타이틀 */
 header {
     background-color: #000000;
     color: #fff;
@@ -15,14 +13,12 @@ header {
     text-align: center;
 }
 
-/* 검색 입력 필드와 버튼을 감싸는 컨테이너 */
 .search-container {
     display: flex;
     justify-content: center;
     margin-top: 20px;
 }
 
-/* 검색 텍스트 입력 */
 .search-container input[type="text"] {
     width: 300px;
     padding: 10px;
@@ -30,7 +26,6 @@ header {
     border-radius: 4px 0 0 4px;
 }
 
-/* 검색 버튼 */
 .search-container button {
     padding: 10px 20px;
     background-color: #0056b3;
@@ -44,7 +39,6 @@ header {
     background-color: #00478f;
 }
 
-/* 영화 카드 컨테이너 */
 #movieContainer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -52,7 +46,6 @@ header {
     padding: 20px;
 }
 
-/* 영화 카드 */
 .movieCard {
     background-color: #fff;
     border: 1px solid #ddd;
@@ -65,31 +58,26 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 영화 포스터 이미지 */
 .movieCard img {
     width: 100%;
     height: 250px;
     object-fit: cover;
 }
 
-/* 영화 정보 */
 .movieCard .movieInfo {
     padding: 10px;
 }
 
-/* 영화 제목 */
 .movieCard h2 {
     margin-top: 0;
     margin-bottom: 10px;
 }
 
-/* 영화 설명 */
 .movieCard p {
     margin: 0;
     line-height: 1.5;
 }
 
-/* HOME 버튼 */
 #homeButton {
     padding: 10px 20px;
     background-color: #0056b3;
@@ -103,26 +91,23 @@ header {
     background-color: #00478f;
 }
 
-/* 팝업 박스 */
 #popup {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
+    background-color: #f0f0f0; /* 변경된 부분: 회색 배경 */
+    color: #333333; /* 변경된 부분: 어두운 글씨 색상 */
     padding: 20px;
     border-radius: 8px;
     z-index: 1000;
 }
 
-/* 팝업 내부 콘텐츠 */
 .popup-content {
     text-align: center;
 }
 
-/* 팝업 닫기 버튼 */
 .close {
     color: #ccc;
     float: right;
@@ -132,8 +117,7 @@ header {
 
 .close:hover,
 .close:focus {
-    color: #fff;
+    color: #000000; /* 변경된 부분: 버튼 색상 */
     text-decoration: none;
     cursor: pointer;
 }
-

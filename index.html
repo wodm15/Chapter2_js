@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>영화 검색 사이트</title>
     <link rel="stylesheet" href="yohan.css">
-
 </head>
 <body>
     <header>
@@ -20,6 +19,16 @@
     <main id="movieContainer">
     </main>
 
-    <script src="yohan.js"></script> 
+    <div id="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h2 id="popupTitle"></h2>
+            <p><strong>개봉일:</strong> <span id="popupReleaseDate"></span></p>
+            <p><strong>장르:</strong> <span id="popupGenres"></span></p>
+            <p><strong>줄거리:</strong> <span id="popupOverview"></span></p>
+        </div>
+    </div>
+
+    <script src="yohan.js"></script>
 </body>
 </html>
