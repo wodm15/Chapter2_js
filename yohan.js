@@ -120,6 +120,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     function openPopup(movieId) {
         popup.style.display = 'block';
 
+        const popupImg = document.getElementById('popupImg');
         const popupTitle = document.getElementById('popupTitle');
         const popupReleaseDate = document.getElementById('popupReleaseDate');
         const popupGenres = document.getElementById('popupGenres');
@@ -130,6 +131,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         fetch(movieDetailsUrl)
             .then(response => response.json())
             .then(data => {
+                popupImg.src = `https://image.tmdb.org/t/p/w500/${data.poster_path}`;
                 popupTitle.textContent = data.title;
                 popupReleaseDate.textContent = " " + data.release_date;
                 popupGenres.textContent = " " + data.genres.map(genre => genre.name).join(', ');

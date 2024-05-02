@@ -121,3 +121,9 @@ header {
     text-decoration: none;
     cursor: pointer;
 }
+
+.popupImgclass{
+    float:left;
+    height: 400px;
+    width: 300px;
+}
