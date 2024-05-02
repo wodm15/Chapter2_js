@@ -26,6 +26,25 @@
             <p><strong>개봉일:</strong> <span id="popupReleaseDate"></span></p>
             <p><strong>장르:</strong> <span id="popupGenres"></span></p>
             <p><strong>줄거리:</strong> <span id="popupOverview"></span></p>
+
+            <!-- 댓글 작성 폼 -->
+        <br><br>
+        <div class="comment-container">
+            <h2>댓글 작성 및 삭제</h2>
+            <div id="commentForm">
+                <span>아이디:</span>
+                <input type="text" id="userId" placeholder="아이디를 입력하세요." >
+                <span>비밀번호:</span>
+                <input type="password" id="password" placeholder="비밀번호를 입력하세요.">
+                <p></p>
+                <span>댓글:</span>
+                <input type="text" id="commentContent" placeholder="댓글을 입력하세요.">
+                <button id="submitComment" type="button">댓글 작성</button>
+            </div>
+        
+            <div id="commentDisplay"></div>
+        </div>
+        
         </div>
     </div>
 

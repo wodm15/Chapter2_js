@@ -154,3 +154,24 @@ document.addEventListener('DOMContentLoaded', async function () {
     const closePopupButton = document.querySelector('.close'); // X 버튼을 가져옴
     closePopupButton.addEventListener('click', closePopup); // X 버튼에 이벤트 핸들러 추가
 });
+
+
+
+
+// 로컬스토리지 댓글 구현 
+
+const commentForm = document.getElementById('commentForm');
+const commentDisplay = document.getElementById('commentDisplay');
+
+// 댓글 작성 폼 제출 시 브라우저가 새로고침 되는 것을 막기
+commentForm.addEventListener('submit', function(event) {
+    event.preventDefault(); 
+
+    // 입력값 가져오기
+const userId = document.getElementById('userIdInput').value.trim();
+const password = document.getElementById('passwordInput').value.trim();
+const comment = document.getElementById('commentInput').value.trim();
+
+console.log(userId);
+
+});
