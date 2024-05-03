@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
+    
     // 영화 카드 생성
     function createMovieCard(movie) {
         const movieCard = document.createElement('div');
@@ -119,7 +120,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     // 팝업 열기
     function openPopup(movieId) {
         popup.style.display = 'block';
-
         const popupImg = document.getElementById('popupImg');
         const popupTitle = document.getElementById('popupTitle');
         const popupReleaseDate = document.getElementById('popupReleaseDate');
@@ -136,6 +136,71 @@ document.addEventListener('DOMContentLoaded', async function () {
                 popupReleaseDate.textContent = " " + data.release_date;
                 popupGenres.textContent = " " + data.genres.map(genre => genre.name).join(', ');
                 popupOverview.textContent = " " + data.overview;
+
+            //////// 로컬 스토리지 구현 부분
+            const commentForm = document.getElementById('commentForm');
+            const submitComment = document.getElementById('submitComment');
+
+            displayComments(movieId);  //이전 댓글 보여주기 
+
+            submitComment.addEventListener('click', function(event) {
+                
+            // //댓글 5개 제한
+            // if (movieComments && movieId.comment > 5){
+            //     alert('댓글은 5개까지');
+            //     return;
+            // }
+
+            //입력값 가져오기
+            const userId = document.getElementById('userId').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const comment = document.getElementById('commentContent').value.trim();
+
+
+            // 현재 영화의 댓글 목록 가져오기
+            let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
+
+            // 댓글을 저장할 객체 생성
+            const newComment = {
+            userId: userId,
+            password: password,
+            comment: comment
+            };
+
+            movieComments.push(newComment);
+
+            // 로컬 스토리지에 댓글 저장
+            localStorage.setItem(movieId, JSON.stringify(movieComments)); // movieId를 키로 사용
+
+            displayComments(movieId);
+
+            });
+
+
+        // 댓글 보여주는 함수
+        function displayComments(movieId) {
+            const movieComments = JSON.parse(localStorage.getItem(movieId));
+            console.log(movieId);
+            console.log(movieComments);
+
+            //댓글이 있는 경우
+            if (movieComments && movieComments.length > 0) {
+            commentDisplay.innerHTML = '';
+            movieComments.forEach(comment => {
+            const commentElement = document.createElement('p');
+            commentElement.textContent=comment.comment;
+            commentDisplay.appendChild(commentElement);
+        });
+    
+            // 댓글이 없는 경우
+            } else {
+            commentDisplay.innerHTML = '등록된 댓글이 없습니다.';
+            }
+        };
+
+
+        //////// 로컬 스토리지 구현 부분 끝
+
             })
             .catch(error => {
                 console.error('Error fetching movie details:', error);
@@ -159,55 +224,4 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
 
-
-// 로컬스토리지 댓글 구현 
-
-const commentForm = document.getElementById('commentForm');
-submitComment.addEventListener('click', function(event) {
-    // 입력값 가져오기
-    const userId = document.getElementById('userId').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const comment = document.getElementById('commentContent').value.trim();
-    const movieId = document.getElementById('movie.id')  //구현 안됨
-    console.log((movieId))
-
-    // 현재 영화의 댓글 목록 가져오기
-    let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
-
-    // 댓글을 저장할 객체 생성
-    const newComment = {
-        userId: userId,
-        password: password,
-        comment: comment
-    };
-
-    movieComments.push(newComment);
-
-    // 로컬 스토리지에 댓글 저장
-    localStorage.setItem(movieId, JSON.stringify(movieComments)); // movieId를 키로 사용
-});
-
-// 영화 포스터를 클릭할 때 댓글 표시
-const moviePosterImage = document.getElementById('movieCard');
-window.addEventListener('click', () => {
-    const movieId = document.getElementById('movie.id');  // 현재 클릭한 영화의 id
-    displayComments(movieId);
-});
-
-// 댓글 표시 함수
-function displayComments(movieId) {
-    const movieComments = JSON.parse(localStorage.getItem(movieId));
-    if (movieComments && movieComments.length > 0) {
-        commentDisplay.innerHTML = '';
-        movieComments.forEach(comment => {
-            const commentElement = document.createElement('div');
-            commentElement.textContent = `${comment.userId}: ${comment.comment}`;
-            commentDisplay.appendChild(commentElement);
-        });
-    
-        
-    } else {
-        commentDisplay.innerHTML = '등록된 댓글이 없습니다.';
-    }
-}
 
