@@ -144,21 +144,40 @@ document.addEventListener('DOMContentLoaded', async function () {
             displayComments(movieId);  //이전 댓글 보여주기 
 
             submitComment.addEventListener('click', function(event) {
-                
-            // //댓글 5개 제한
-            // if (movieComments && movieId.comment > 5){
-            //     alert('댓글은 5개까지');
-            //     return;
-            // }
+            
+            console.log(movieId);
+            //댓글 5개 제한
+            let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
+
+
+            if (movieComments && movieComments.length >= 3){
+                event.preventDefault();
+                return;
+            }
 
             //입력값 가져오기
             const userId = document.getElementById('userId').value.trim();
             const password = document.getElementById('password').value.trim();
             const comment = document.getElementById('commentContent').value.trim();
+            
+            //입력값 필터링(아이디, 비밀번호, 댓글)
+            if (userId == ''){
+                alert('공백없이 입력하세요');
+                return false;
+            }
+            else if (password == ''){
+                alert('공백없이 입력하세요');
+                return false;
+            }
+            else if (comment == ''){
+                alert('공백없이 입력하세요');
+                return false;
+            }
+            
 
 
             // 현재 영화의 댓글 목록 가져오기
-            let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
+             movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
 
             // 댓글을 저장할 객체 생성
             const newComment = {
@@ -188,7 +207,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             commentDisplay.innerHTML = '';
             movieComments.forEach(comment => {
             const commentElement = document.createElement('p');
-            commentElement.textContent=comment.comment;
+            commentElement.textContent=`${comment.userId} : ${comment.comment}`;
             commentDisplay.appendChild(commentElement);
         });
     
