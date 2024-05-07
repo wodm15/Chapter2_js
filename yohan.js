@@ -179,8 +179,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const movieInfo = document.createElement('div');
     movieInfo.classList.add('movieInfo');
 
-    const title = document.createElement('h2');
-    title.textContent = movie.title;
+    const title = document.createElement('h3');
+    title.textContent = `🌙 ${movie.title}`;
 
     const overview = document.createElement('p');
     overview.textContent = movie.overview;
