@@ -7,10 +7,16 @@ document.addEventListener('DOMContentLoaded', async function () {
   const homeButton = document.getElementById('homeButton');
   const popup = document.getElementById('popup');
   const commentDisplay = document.getElementById('commentDisplay');
+  const nowpop = document.getElementById('nowpop');
+  const historypop = document.getElementById('historypop');
+  const upcoming = document.getElementById('upcoming');
 
   // 검색 입력란에 포커스 설정
   searchInput.focus();
   searchInput.select();
+
+
+  let pop;
 
   // 영화 검색 함수
   async function searchMovies(query) {
@@ -51,6 +57,21 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   });
 
+  //사이드바 클릭시 데이터 출력
+
+  nowpop.addEventListener('click', async () => {
+    await fetchPopularMovies();
+  })
+
+
+  historypop.addEventListener('click', async () => {
+    await fetchTopRatedMovies();
+  })
+
+  upcoming.addEventListener('click', async () => {
+    await fetchUpcomingMoives();
+  })
+
   // 최고 평점 영화 가져오기
   await fetchTopRatedMovies();
 
@@ -78,6 +99,59 @@ document.addEventListener('DOMContentLoaded', async function () {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+  }
+
+  //인기 영화 데이터
+  async function fetchPopularMovies() {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTAzYWNjMTdhZjRhN2RhNDIzMGFjNzJiMTMxNGM5NSIsInN1YiI6IjY2MjhkYmI5ZTI5NWI0MDE4NzlkZjZkZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Orq013qKSJNxThVzu1GCoS-V1LS-I2iQ7REkBIzBtKw'
+      }
+    };
+
+    try {
+      const response = await fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+        options);
+      const data = await response.json();
+      if (data && data.results) {
+        pop = data.results;
+        displayMovies(data.results);
+      } else {
+        console.error('Invalid data format:', data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
+  }
+
+
+  //인기 영화 데이터
+  async function fetchUpcomingMoives() {
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTAzYWNjMTdhZjRhN2RhNDIzMGFjNzJiMTMxNGM5NSIsInN1YiI6IjY2MjhkYmI5ZTI5NWI0MDE4NzlkZjZkZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Orq013qKSJNxThVzu1GCoS-V1LS-I2iQ7REkBIzBtKw'
+      }
+    };
+
+    try {
+      const response = await fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', 
+      options)
+      const data = await response.json();
+      if (data && data.results) {
+        pop = data.results;
+        displayMovies(data.results);
+      } else {
+        console.error('Invalid data format:', data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+
   }
 
   // 영화 목록 표시
