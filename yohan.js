@@ -105,13 +105,16 @@ document.addEventListener('DOMContentLoaded', async function () {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTAzYWNjMTdhZjRhN2RhNDIzMGFjNzJiMTMxNGM5NSIsInN1YiI6IjY2MjhkYmI5ZTI5NWI0MDE4NzlkZjZkZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Orq013qKSJNxThVzu1GCoS-V1LS-I2iQ7REkBIzBtKw'
-      }
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTAzYWNjMTdhZjRhN2RhNDIzMGFjNzJiMTMxNGM5NSIsInN1YiI6IjY2MjhkYmI5ZTI5NWI0MDE4NzlkZjZkZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Orq013qKSJNxThVzu1GCoS-V1LS-I2iQ7REkBIzBtKw',
+      },
     };
 
     try {
-      const response = await fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
-        options);
+      const response = await fetch(
+        'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+        options
+      );
       const data = await response.json();
       if (data && data.results) {
         pop = data.results;
@@ -122,9 +125,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-
   }
-
 
   //인기 영화 데이터
   async function fetchUpcomingMoives() {
@@ -132,13 +133,16 @@ document.addEventListener('DOMContentLoaded', async function () {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTAzYWNjMTdhZjRhN2RhNDIzMGFjNzJiMTMxNGM5NSIsInN1YiI6IjY2MjhkYmI5ZTI5NWI0MDE4NzlkZjZkZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Orq013qKSJNxThVzu1GCoS-V1LS-I2iQ7REkBIzBtKw'
-      }
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhNTAzYWNjMTdhZjRhN2RhNDIzMGFjNzJiMTMxNGM5NSIsInN1YiI6IjY2MjhkYmI5ZTI5NWI0MDE4NzlkZjZkZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Orq013qKSJNxThVzu1GCoS-V1LS-I2iQ7REkBIzBtKw',
+      },
     };
 
     try {
-      const response = await fetch('https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1', 
-      options)
+      const response = await fetch(
+        'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1',
+        options
+      );
       const data = await response.json();
       if (data && data.results) {
         pop = data.results;
@@ -149,7 +153,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-
   }
 
   // 영화 목록 표시
@@ -280,6 +283,13 @@ document.addEventListener('DOMContentLoaded', async function () {
               commentText.textContent = `${comment.userId}: ${comment.comment}`;
               commentElement.appendChild(commentText);
 
+              //수정 버튼 추가
+              const editButton = document.createElement('button');
+              editButton.addEventListener('click', () => {
+                editComment(movieId, index);
+              });
+              commentElement.appendChild(editButton);
+
               // 삭제 버튼 추가
               const deleteButton = document.createElement('button');
               deleteButton.addEventListener('click', () => {
@@ -313,6 +323,29 @@ document.addEventListener('DOMContentLoaded', async function () {
             alert('비밀번호가 일치하지 않습니다.');
           }
         }
+
+        // 댓글 수정 함수
+        function editComment(movieId, index) {
+          // 확인 창 표시
+          const movieComments = JSON.parse(localStorage.getItem(movieId));
+          const editCheck = confirm('댓글을 수정하시겠습니까?');
+          if (!editCheck) {
+            return; // 취소한 경우 함수 종료
+          }
+          // 비밀번호 확인
+          const userPassword = prompt(
+            `(ID : ${movieComments[index].userId}) 해당 아이디의 비밀번호를 입력해주세요`
+          );
+          if (userPassword === movieComments[index].password) {
+            //댓글 수정 내용 입력
+            const newComment = prompt(`수정할 내용을 입력해주세요`);
+            movieComments[index].comment = newComment;
+            localStorage.setItem(movieId, JSON.stringify(movieComments));
+            displayComments(movieId);
+          } else {
+            alert('비밀번호가 일치하지 않습니다.');
+          }
+        }
         //////// 로컬 스토리지 구현 부분 끝
       })
       .catch((error) => {
@@ -334,4 +367,3 @@ document.addEventListener('DOMContentLoaded', async function () {
   const closePopupButton = document.querySelector('.close'); // X 버튼을 가져옴
   closePopupButton.addEventListener('click', closePopup); // X 버튼에 이벤트 핸들러 추가
 });
-
