@@ -285,6 +285,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
               //수정 버튼 추가
               const editButton = document.createElement('button');
+              editButton.id = 'editButton';
+              editButton.textContent = 'Edit  ✎';
               editButton.addEventListener('click', () => {
                 editComment(movieId, index);
               });
@@ -292,6 +294,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
               // 삭제 버튼 추가
               const deleteButton = document.createElement('button');
+              deleteButton.id = 'deleteButton';
               deleteButton.addEventListener('click', () => {
                 deleteComment(movieId, index);
               });
