@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   searchInput.focus();
   searchInput.select();
 
-
   let pop;
 
   // 영화 검색 함수
@@ -61,16 +60,15 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   nowpop.addEventListener('click', async () => {
     await fetchPopularMovies();
-  })
-
+  });
 
   historypop.addEventListener('click', async () => {
     await fetchTopRatedMovies();
-  })
+  });
 
   upcoming.addEventListener('click', async () => {
     await fetchUpcomingMoives();
-  })
+  });
 
   // 최고 평점 영화 가져오기
   await fetchTopRatedMovies();
@@ -305,9 +303,15 @@ document.addEventListener('DOMContentLoaded', async function () {
           }
 
           const movieComments = JSON.parse(localStorage.getItem(movieId));
-          movieComments.splice(index, 1);
-          localStorage.setItem(movieId, JSON.stringify(movieComments));
-          displayComments(movieId);
+          const userPassword = prompt('비밀번호를 입력하세요.');
+          // 비밀번호 확인
+          if (userPassword === movieComments[index].password) {
+            movieComments.splice(index, 1);
+            localStorage.setItem(movieId, JSON.stringify(movieComments));
+            displayComments(movieId);
+          } else {
+            alert('비밀번호가 일치하지 않습니다.');
+          }
         }
         //////// 로컬 스토리지 구현 부분 끝
       })
@@ -330,3 +334,4 @@ document.addEventListener('DOMContentLoaded', async function () {
   const closePopupButton = document.querySelector('.close'); // X 버튼을 가져옴
   closePopupButton.addEventListener('click', closePopup); // X 버튼에 이벤트 핸들러 추가
 });
+
