@@ -222,6 +222,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         //////// 로컬 스토리지 구현 부분
         const commentForm = document.getElementById('commentForm');
         const submitComment = document.getElementById('submitComment');
+        submitComment.id = 'submitComment';
 
         displayComments(movieId); //이전 댓글 보여주기
 

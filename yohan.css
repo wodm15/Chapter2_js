@@ -1,4 +1,10 @@
 /* yohan.css */
+/*font*/
+* {
+  font-family: 'Jua', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
 /* 전체 스타일 */
 body {
@@ -9,7 +15,7 @@ body {
 }
 
 header {
-  background-color: #000000;
+  background-color: #141414;
   color: #fff;
   padding: 20px;
   text-align: center;
@@ -100,8 +106,8 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #f0f0f0;
-  color: #333333;
+  background-color: #141517;
+  color: #ffffff;
   padding: 20px;
   border-radius: 8px;
   z-index: 1000;
@@ -196,25 +202,43 @@ a {
   background-color: black;
 }
 
-.comment {
-  display: grid;
-  grid-template-columns: 25fr 2fr 1fr;
-  margin: 10px;
-}
-
-.comment p {
-  font-size: medium;
-}
-
-#editButton {
+#submitComment {
   padding: 10px; /* 버튼의 패딩 */
-  background-color: #7f056e;
+  margin: 15px 0px 20px 0px;
+  background-color: #ef9a53;
   color: #fff; /* 텍스트 색상 */
   border: none; /* 테두리 없음 */
   border-radius: 4px; /* 테두리 둥글게 */
   cursor: pointer;
   margin-left: 10px; /* 왼쪽 여백 */
   position: relative; /* 상대 위치 설정 */
+}
+.comment {
+  display: grid;
+  grid-template-columns: 25fr 2fr 1fr;
+  margin: 10px;
+  background-color: #27292c;
+  color: #ffffff;
+}
+
+.comment p {
+  font-size: medium;
+  background-color: #27292c;
+  color: #ffffff;
+}
+
+#editButton {
+  padding: 10px; /* 버튼의 패딩 */
+  background-color: #f82f62;
+  color: #fff; /* 텍스트 색상 */
+  border: none; /* 테두리 없음 */
+  border-radius: 4px; /* 테두리 둥글게 */
+  cursor: pointer;
+  margin-left: 10px; /* 왼쪽 여백 */
+  position: relative; /* 상대 위치 설정 */
+}
+#editButton:hover {
+  background-color: #d82854;
 }
 #deleteButton {
   padding: 10px; /* 버튼의 패딩 */
