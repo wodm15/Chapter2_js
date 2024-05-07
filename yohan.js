@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     const apiKey = '74ff6e1f9c4702bf2cdb221fbfb25dd1';
     const homeButton = document.getElementById('homeButton');
     const popup = document.getElementById('popup');
+    const commentDisplay = document.getElementById('commentDisplay');
 
     // 검색 입력란에 포커스 설정
     searchInput.focus();
@@ -85,7 +86,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         });
     }
 
-    
     // 영화 카드 생성
     function createMovieCard(movie) {
         const movieCard = document.createElement('div');
@@ -137,88 +137,106 @@ document.addEventListener('DOMContentLoaded', async function () {
                 popupGenres.textContent = " " + data.genres.map(genre => genre.name).join(', ');
                 popupOverview.textContent = " " + data.overview;
 
-            //////// 로컬 스토리지 구현 부분
-            const commentForm = document.getElementById('commentForm');
-            const submitComment = document.getElementById('submitComment');
+                //////// 로컬 스토리지 구현 부분
+                const commentForm = document.getElementById('commentForm');
+                const submitComment = document.getElementById('submitComment');
 
-            displayComments(movieId);  //이전 댓글 보여주기 
+                displayComments(movieId);  //이전 댓글 보여주기 
 
-            submitComment.addEventListener('click', function(event) {
-            
-            console.log(movieId);
-            //댓글 5개 제한
-            let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
-
-
-            if (movieComments && movieComments.length >= 3){
-                event.preventDefault();
-                return;
-            }
-
-            //입력값 가져오기
-            const userId = document.getElementById('userId').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const comment = document.getElementById('commentContent').value.trim();
-            
-            //입력값 필터링(아이디, 비밀번호, 댓글)
-            if (userId == ''){
-                alert('공백없이 입력하세요');
-                return false;
-            }
-            else if (password == ''){
-                alert('공백없이 입력하세요');
-                return false;
-            }
-            else if (comment == ''){
-                alert('공백없이 입력하세요');
-                return false;
-            }
-            
+                submitComment.addEventListener('click', function (event) {
+                    console.log(movieId);
+                    //댓글 5개 제한
+                    let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
 
 
-            // 현재 영화의 댓글 목록 가져오기
-             movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
+                    if (movieComments && movieComments.length >= 3) {
+                        event.preventDefault();
+                        return;
+                    }
 
-            // 댓글을 저장할 객체 생성
-            const newComment = {
-            userId: userId,
-            password: password,
-            comment: comment
-            };
+                    //입력값 가져오기
+                    const userId = document.getElementById('userId').value.trim();
+                    const password = document.getElementById('password').value.trim();
+                    const comment = document.getElementById('commentContent').value.trim();
 
-            movieComments.push(newComment);
+                    //입력값 필터링(아이디, 비밀번호, 댓글)
+                    if (userId == '') {
+                        alert('공백없이 입력하세요');
+                        return false;
+                    }
+                    else if (password == '') {
+                        alert('공백없이 입력하세요');
+                        return false;
+                    }
+                    else if (comment == '') {
+                        alert('공백없이 입력하세요');
+                        return false;
+                    }
 
-            // 로컬 스토리지에 댓글 저장
-            localStorage.setItem(movieId, JSON.stringify(movieComments)); // movieId를 키로 사용
+                    // 현재 영화의 댓글 목록 가져오기
+                    movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
 
-            displayComments(movieId);
+                    // 댓글을 저장할 객체 생성
+                    const newComment = {
+                        userId: userId,
+                        password: password,
+                        comment: comment
+                    };
 
-            });
+                    movieComments.push(newComment);
 
+                    // 로컬 스토리지에 댓글 저장
+                    localStorage.setItem(movieId, JSON.stringify(movieComments)); // movieId를 키로 사용
 
-        // 댓글 보여주는 함수
-        function displayComments(movieId) {
-            const movieComments = JSON.parse(localStorage.getItem(movieId));
-            console.log(movieId);
-            console.log(movieComments);
+                    displayComments(movieId);
 
-            //댓글이 있는 경우
-            if (movieComments && movieComments.length > 0) {
-            commentDisplay.innerHTML = '';
-            movieComments.forEach(comment => {
-            const commentElement = document.createElement('p');
-            commentElement.textContent=`${comment.userId} : ${comment.comment}`;
-            commentDisplay.appendChild(commentElement);
-        });
-    
-            // 댓글이 없는 경우
-            } else {
-            commentDisplay.innerHTML = '등록된 댓글이 없습니다.';
-            }
-        };
+                });
 
+                // 댓글 보여주는 함수
+                function displayComments(movieId) {
+                    const movieComments = JSON.parse(localStorage.getItem(movieId));
+                    console.log(movieId);
+                    console.log(movieComments);
 
-        //////// 로컬 스토리지 구현 부분 끝
+                    // 댓글이 있는 경우
+                    if (movieComments && movieComments.length > 0) {
+                        commentDisplay.innerHTML = '';
+                        movieComments.forEach((comment, index) => {
+                            const commentElement = document.createElement('div');
+                            commentElement.classList.add('comment');
+
+                            const commentText = document.createElement('p');
+                            commentText.textContent = `${comment.userId}: ${comment.comment}`;
+                            commentElement.appendChild(commentText);
+
+                            // 삭제 버튼 추가
+                            const deleteButton = document.createElement('button');
+                            deleteButton.addEventListener('click', () => {
+                                deleteComment(movieId, index);
+                            });
+                            commentElement.appendChild(deleteButton);
+
+                            commentDisplay.appendChild(commentElement);
+                        });
+                    } else {
+                        commentDisplay.innerHTML = '등록된 댓글이 없습니다.';
+                    }
+                }
+
+                // 댓글 삭제 함수
+                function deleteComment(movieId, index) {
+                    // 확인 창 표시
+                    const isConfirmed = confirm('정말로 이 댓글을 삭제하시겠습니까?');
+                    if (!isConfirmed) {
+                        return; // 취소한 경우 함수 종료
+                    }
+
+                    const movieComments = JSON.parse(localStorage.getItem(movieId));
+                    movieComments.splice(index, 1);
+                    localStorage.setItem(movieId, JSON.stringify(movieComments));
+                    displayComments(movieId);
+                }
+                //////// 로컬 스토리지 구현 부분 끝
 
             })
             .catch(error => {
@@ -240,7 +258,3 @@ document.addEventListener('DOMContentLoaded', async function () {
     const closePopupButton = document.querySelector('.close'); // X 버튼을 가져옴
     closePopupButton.addEventListener('click', closePopup); // X 버튼에 이벤트 핸들러 추가
 });
-
-
-
-
