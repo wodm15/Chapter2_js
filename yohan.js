@@ -180,7 +180,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     movieInfo.classList.add('movieInfo');
 
     const title = document.createElement('h3');
-    title.textContent = `🌙 ${movie.title}`;
+    title.id = 'title';
+    title.textContent = `🌟 ${movie.title}`;
 
     const overview = document.createElement('p');
     overview.textContent = movie.overview;
@@ -281,7 +282,7 @@ document.addEventListener('DOMContentLoaded', async function () {
               commentElement.classList.add('comment');
 
               const commentText = document.createElement('p');
-              commentText.textContent = `${comment.userId}: ${comment.comment}`;
+              commentText.textContent = `🚀 [User: ${comment.userId}]  ${comment.comment}`;
               commentElement.appendChild(commentText);
 
               //수정 버튼 추가
