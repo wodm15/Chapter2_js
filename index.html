@@ -1,81 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>영화 검색 사이트</title>
-    <link rel="stylesheet" href="yohan.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
+    <link rel="stylesheet" href="yohan.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
     <div class="left-side-bar">
-        <div class="status-ico">
-            <span>▶</span>
-            <span>▼</span>
-        </div>
+      <div class="status-ico">
+        <span>▶</span>
+        <span>▼</span>
+      </div>
 
-        <ul>
-            <li>
-                <a href="#">인기 영화</a>
-            <li>
-                <a href="#">최신 영화</a>
-            </li>
-            <li>
-                <a href="#">역대 흥행 영화</a>
-            </li>
-        </ul>
+      <ul>
+        <li>
+          <a href="#">인기 영화</a>
+        </li>
+
+        <li>
+          <a href="#">최신 영화</a>
+        </li>
+        <li>
+          <a href="#">역대 흥행 영화</a>
+        </li>
+      </ul>
     </div>
-
 
     <header>
-        <h1>영화 검색 사이트</h1>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="영화 제목을 입력하세요.">
-            <button id="searchButton">Search</button>
-            <button id="homeButton">HOME</button>
-        </div>
+      <h1>영화 검색 사이트</h1>
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="영화 제목을 입력하세요."
+        />
+        <button id="searchButton">Search</button>
+        <button id="homeButton">HOME</button>
+      </div>
     </header>
 
-    <main id="movieContainer">
-    </main>
+    <main id="movieContainer"></main>
 
     <div id="popup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <div>
-                <img id = "popupImg" class = "popupImgclass">
-            </div>
-            <h2 id="popupTitle"></h2>
-            <p><strong>개봉일:</strong> <span id="popupReleaseDate"></span></p>
-            <p><strong>장르:</strong> <span id="popupGenres"></span></p>
-            <p><strong>줄거리:</strong> <span id="popupOverview"></span></p>
+      <div class="popup-content">
+        <span class="close">&times;</span>
+        <div>
+          <img id="popupImg" class="popupImgclass" />
+        </div>
+        <h2 id="popupTitle"></h2>
+        <p><strong>개봉일:</strong> <span id="popupReleaseDate"></span></p>
+        <p><strong>장르:</strong> <span id="popupGenres"></span></p>
+        <p><strong>줄거리:</strong> <span id="popupOverview"></span></p>
 
-            <!-- 댓글 작성 폼 -->
-        <br>
-        <div class="comment-container" style="text-align: right;">
-            <h2>댓글 (up to 3)</h2>
-            <div id="commentForm">
-                <div>
-                    <span>아이디:</span>
-                    <input type="text" id="userId" placeholder="아이디를 입력하세요.">
-                    <p></p>
-                </div>
-                <span>비밀번호:</span>
-                <input type="password" id="password" placeholder="비밀번호를 입력하세요.">
-                <p></p>
-                <span>댓글:</span>
-                <input type="textarea" id="commentContent" placeholder="댓글을 입력하세요.">
-                <p></p>
-                <button id="submitComment" type="button">댓글 작성</button>
+        <!-- 댓글 작성 폼 -->
+        <br />
+        <div class="comment-container" style="text-align: right">
+          <h2>댓글 (up to 3)</h2>
+          <div id="commentForm">
+            <div>
+              <span>아이디:</span>
+              <input
+                type="text"
+                id="userId"
+                placeholder="아이디를 입력하세요."
+              />
+              <p></p>
             </div>
-        
-            <div></div>
+            <span>비밀번호:</span>
+            <input
+              type="password"
+              id="password"
+              placeholder="비밀번호를 입력하세요."
+            />
+            <p></p>
+            <span>댓글:</span>
+            <input
+              type="textarea"
+              id="commentContent"
+              placeholder="댓글을 입력하세요."
+            />
+            <p></p>
+            <button id="submitComment" type="button">댓글 작성</button>
+          </div>
+
+          <div></div>
         </div>
-        </div>
-        <div id="commentDisplay" style="width:100%; border: 1px solid black";></div>
+      </div>
+      <div
+        id="commentDisplay"
+        style="width: 100%; border: 1px solid black"
+        ;
+      ></div>
     </div>
-    
+
     <script src="yohan.js"></script>
-</body>
+  </body>
 </html>
