@@ -10,12 +10,15 @@ document.addEventListener('DOMContentLoaded', async function () {
   const nowpop = document.getElementById('nowpop');
   const historypop = document.getElementById('historypop');
   const upcoming = document.getElementById('upcoming');
-
+  const page1 = document.getElementById('page1');
+  const page2 = document.getElementById('page2');
+  const page3 = document.getElementById('page3');
+  
   // 검색 입력란에 포커스 설정
   searchInput.focus();
   searchInput.select();
 
-  let pop;
+  let nowpagedata = 0;
 
   // 영화 검색 함수
   async function searchMovies(query) {
@@ -59,21 +62,70 @@ document.addEventListener('DOMContentLoaded', async function () {
   //사이드바 클릭시 데이터 출력
 
   nowpop.addEventListener('click', async () => {
-    await fetchPopularMovies();
+    await fetchPopularMovies(1);
   });
 
   historypop.addEventListener('click', async () => {
-    await fetchTopRatedMovies();
+    await fetchTopRatedMovies(1);
   });
 
   upcoming.addEventListener('click', async () => {
-    await fetchUpcomingMoives();
+    await fetchUpcomingMoives(1);
+  });
+
+  page1.addEventListener('click', async () => {
+    switch (nowpagedata) {
+      case 0:
+        await fetchPopularMovies(1);
+        break;
+    
+      case 1:
+        await fetchUpcomingMoives(1);
+        break;
+      case 2:
+        await fetchTopRatedMovies(1);
+        break;
+      default:
+        break;
+    }
+  });
+  page2.addEventListener('click', async () => {
+    switch (nowpagedata) {
+      case 0:
+        await fetchPopularMovies(2);
+        break;
+    
+      case 1:
+        await fetchUpcomingMoives(2);
+        break;
+      case 2:
+        await fetchTopRatedMovies(2);
+        break;
+      default:
+        break;
+    }
+  });
+  page3.addEventListener('click', async () => {
+    switch (nowpagedata) {
+      case 0:
+        await fetchPopularMovies(3);
+        break;
+    
+      case 1:
+        await fetchUpcomingMoives(3);
+        break;
+      case 2:
+        await fetchTopRatedMovies(3);
+        break;
+      default:
+        break;
+    }
   });
 
   // 최고 평점 영화 가져오기
-  await fetchTopRatedMovies();
+  await fetchTopRatedMovies(1);
 
-  async function fetchTopRatedMovies() {
+  async function fetchTopRatedMovies(Pagedata) {
     const options = {
       method: 'GET',
       headers: {
@@ -85,11 +137,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     try {
       const response = await fetch(
-        'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
+        `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${Pagedata}`,
         options
       );
       const data = await response.json();
       if (data && data.results) {
+        nowpagedata = 2;
         displayMovies(data.results);
       } else {
         console.error('Invalid data format:', data);
@@ -100,7 +153,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   //인기 영화 데이터
-  async function fetchPopularMovies() {
+  async function fetchPopularMovies(Pagedata) {
     const options = {
       method: 'GET',
       headers: {
@@ -112,12 +165,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     try {
       const response = await fetch(
-        'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+        `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${Pagedata}`,
         options
       );
       const data = await response.json();
       if (data && data.results) {
-        pop = data.results;
+        nowpagedata = 0;
         displayMovies(data.results);
       } else {
         console.error('Invalid data format:', data);
@@ -128,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   //인기 영화 데이터
-  async function fetchUpcomingMoives() {
+  async function fetchUpcomingMoives(Pagedata) {
     const options = {
       method: 'GET',
       headers: {
@@ -140,12 +193,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     try {
       const response = await fetch(
-        'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1',
+        `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${Pagedata}`,
         options
       );
       const data = await response.json();
       if (data && data.results) {
-        pop = data.results;
+        nowpagedata = 1;
         displayMovies(data.results);
       } else {
         console.error('Invalid data format:', data);
@@ -263,6 +316,13 @@ document.addEventListener('DOMContentLoaded', async function () {
             // alert('공백없이 입력하세요');
             return false;
           }
+          
+          if(password.length <  4)
+            {
+              alert('비밀번호는 4글자 이상으로 작성해주세요');
+              return false;
+            }
+
 
           movieComments.push(newComment);
 

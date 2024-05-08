@@ -296,3 +296,6 @@ a {
   transform: translate(-50%, -50%) rotate(-45deg); /* 다른 방향으로 회전 */
 }
 
+.pagemove {
+  background-color: black;
+}
