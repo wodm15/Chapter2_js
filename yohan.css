@@ -117,7 +117,7 @@ header {
 #popup {
   display: none;
   position: fixed;
-  width: 70%;
+  width: 80%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -295,3 +295,4 @@ a {
 #deleteButton::after {
   transform: translate(-50%, -50%) rotate(-45deg); /* 다른 방향으로 회전 */
 }
+

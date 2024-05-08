@@ -196,6 +196,12 @@ document.addEventListener('DOMContentLoaded', async function () {
       openPopup(movie.id);
     });
 
+    //타이틀 클릭 시 URL 이동
+    title.addEventListener('click', () => {
+      const googleSearchUrl = `https://www.google.com/search?q=${encodeURI(movie.title)}`; 
+      window.open(googleSearchUrl, '_blank');
+    });
+
     return movieCard;
   }
 
@@ -228,10 +234,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         displayComments(movieId); //이전 댓글 보여주기
 
         submitComment.addEventListener('click', function (event) {
-          console.log(movieId);
-          //댓글 5개 제한
-          let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
 
+
+          //댓글 3개 제한
+          let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
           if (movieComments && movieComments.length >= 3) {
             event.preventDefault();
             return;
@@ -240,15 +246,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           //입력값 가져오기
           const userId = document.getElementById('userId').value.trim();
           const password = document.getElementById('password').value.trim();
-          const comment = document
-            .getElementById('commentContent')
-            .value.trim();
-
-          //입력값 필터링(아이디, 비밀번호, 댓글)
-          if (userId == '' || password == '' || comment == '') {
-            alert('공백없이 입력하세요');
-            return false;
-          }
+          const comment = document.getElementById('commentContent').value.trim();
 
           // 현재 영화의 댓글 목록 가져오기
           movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
@@ -260,19 +258,32 @@ document.addEventListener('DOMContentLoaded', async function () {
             comment: comment,
           };
 
+          //입력값 필터링(아이디, 비밀번호, 댓글)
+          if (userId == '' || password == '' || comment == '') {
+            // alert('공백없이 입력하세요');
+            return false;
+          }
+
           movieComments.push(newComment);
 
           // 로컬 스토리지에 댓글 저장
           localStorage.setItem(movieId, JSON.stringify(movieComments)); // movieId를 키로 사용
 
+
+          // submit 시 댓글 입력창 초기화
+          document.getElementById('commentContent').value = '';
+  
           displayComments(movieId);
+
+          
+        
         });
 
         // 댓글 보여주는 함수
         function displayComments(movieId) {
           const movieComments = JSON.parse(localStorage.getItem(movieId));
-          console.log(movieId);
-          console.log(movieComments);
+          
+          
 
           // 댓글이 있는 경우
           if (movieComments && movieComments.length > 0) {
@@ -372,3 +383,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   const closePopupButton = document.querySelector('.close'); // X 버튼을 가져옴
   closePopupButton.addEventListener('click', closePopup); // X 버튼에 이벤트 핸들러 추가
 });
+
+
+
+
