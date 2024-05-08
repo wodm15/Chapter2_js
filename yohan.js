@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', async function () {
   const page1 = document.getElementById('page1');
   const page2 = document.getElementById('page2');
   const page3 = document.getElementById('page3');
-  
+  const page4 = document.getElementById('page4');
+  const page5 = document.getElementById('page5');
+
   // 검색 입력란에 포커스 설정
   searchInput.focus();
   searchInput.select();
@@ -62,18 +64,47 @@ document.addEventListener('DOMContentLoaded', async function () {
   //사이드바 클릭시 데이터 출력
 
   nowpop.addEventListener('click', async () => {
+    let activepage = document.querySelector('.page-link.pageselect');
+    if(activepage)
+      {
+        activepage.classList.remove("pageselect");
+      }
+    page1.classList.add("pageselect");
     await fetchPopularMovies(1);
   });
 
   historypop.addEventListener('click', async () => {
+    let activepage = document.querySelector('.page-link.pageselect');
+    if(activepage)
+      {
+        activepage.classList.remove("pageselect");
+      }
+    page1.classList.add("pageselect");
     await fetchTopRatedMovies(1);
   });
 
   upcoming.addEventListener('click', async () => {
+    let activepage = document.querySelector('.page-link.pageselect');
+    if(activepage)
+      {
+        activepage.classList.remove("pageselect");
+      }
+    page1.classList.add("pageselect");
     await fetchUpcomingMoives(1);
   });
 
+  //하단 페이지를 클릭시 해당하는 페이지의 정보로 이동
   page1.addEventListener('click', async () => {
+
+    //모든 pageselect를 찾아 해당하는 pageselect클래스를 지워줌
+    let activepage = document.querySelector('.page-link.pageselect');
+    if(activepage)
+      {
+        activepage.classList.remove("pageselect");
+      }
+
+    //case에 따라 리스트를 다르게 불러옴
+    page1.classList.add("pageselect");
     switch (nowpagedata) {
       case 0:
         await fetchPopularMovies(1);
@@ -90,6 +121,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   });
   page2.addEventListener('click', async () => {
+    let activepage = document.querySelector('.page-link.pageselect');
+    if(activepage)
+      {
+        activepage.classList.remove("pageselect");
+      }
+
+    page2.classList.add("pageselect");
     switch (nowpagedata) {
       case 0:
         await fetchPopularMovies(2);
@@ -106,6 +144,13 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   });
   page3.addEventListener('click', async () => {
+    let activepage = document.querySelector('.page-link.pageselect');
+    if(activepage)
+      {
+        activepage.classList.remove("pageselect");
+      }
+
+    page3.classList.add("pageselect");
     switch (nowpagedata) {
       case 0:
         await fetchPopularMovies(3);
@@ -122,8 +167,57 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   });
 
+  page4.addEventListener('click', async () => {
+    let activepage = document.querySelector('.page-link.pageselect');
+    if(activepage)
+      {
+        activepage.classList.remove("pageselect");
+      }
+
+    page4.classList.add("pageselect");
+    switch (nowpagedata) {
+      case 0:
+        await fetchPopularMovies(4);
+        break;
+    
+      case 1:
+        await fetchUpcomingMoives(4);
+        break;
+      case 2:
+        await fetchTopRatedMovies(4);
+        break;
+      default:
+        break;
+    }
+  });
+
+  page5.addEventListener('click', async () => {
+    let activepage = document.querySelector('.page-link.pageselect');
+    if(activepage)
+      {
+        activepage.classList.remove("pageselect");
+      }
+
+    page5.classList.add("pageselect");
+    switch (nowpagedata) {
+      case 0:
+        await fetchPopularMovies(5);
+        break;
+    
+      case 1:
+        await fetchUpcomingMoives(5);
+        break;
+      case 2:
+        await fetchTopRatedMovies(5);
+        break;
+      default:
+        break;
+    }
+  });
+
   // 최고 평점 영화 가져오기
   await fetchTopRatedMovies(1);
+  page1.classList.add("pageselect");
 
   async function fetchTopRatedMovies(Pagedata) {
     const options = {
@@ -303,6 +397,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
           // 현재 영화의 댓글 목록 가져오기
           movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
+          
+          //아이디 범위 3~12글자
+          //비밀번호 범위 영어,숫자를 포함한 4~8글자
+          //댓글은 최소 3글자이상
+          let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{4,8}$/;
+          let idRegex = /^().{3,12}$/;
 
           // 댓글을 저장할 객체 생성
           const newComment = {
@@ -317,12 +417,23 @@ document.addEventListener('DOMContentLoaded', async function () {
             return false;
           }
           
-          if(password.length <  4)
+          if(!passwordRegex.test(password))
             {
-              alert('비밀번호는 4글자 이상으로 작성해주세요');
+              alert('비밀번호는 영어와 숫자를 포함해 4~8글자로 작성해주세요');
               return false;
             }
 
+          if(!idRegex.test(userId))
+            {
+              alert('아이디는 3~12글자로 작성해주세요');
+              return false;
+            }
+
+          if(comment.length < 3)
+            {
+              alert('댓글은 최소 3글자 이상으로 작성해주세요.');
+              return false;
+            }
 
           movieComments.push(newComment);
 

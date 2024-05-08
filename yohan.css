@@ -299,3 +299,12 @@ a {
 .pagemove {
   background-color: black;
 }
+
+/*하단 페이지 클릭시 이동*/
+.page-link{
+  background-color: white;
+}
+
+.page-link.pageselect {
+  background-color: orange;
+}
