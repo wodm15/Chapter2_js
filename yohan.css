@@ -118,7 +118,7 @@ header {
   border-radius: 8px;
   z-index: 1000;
   opacity: 0.98;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .popup-content {
