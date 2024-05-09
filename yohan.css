@@ -1,3 +1,12 @@
+/* yohan.css */
+/*font*/
+/* headerFont {
+  font-family: 'Jaro', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+} */
+
 /* 전체 스타일 */
 .header_h1 {
   font-family: 'Jaro', sans-serif;
@@ -117,6 +126,7 @@ header {
   padding: 20px;
   border-radius: 8px;
   z-index: 1000;
+  overflow-y: scroll;
   opacity: 0.98;
 }
 
@@ -222,8 +232,6 @@ a {
 }
 #commentDisplay {
   background-color: #28262a;
-  height: 300px; /* 예: 높이를 300px로 고정 */
-  overflow-y: auto;
 }
 .comment {
   display: grid;
@@ -288,3 +296,15 @@ a {
   transform: translate(-50%, -50%) rotate(-45deg); /* 다른 방향으로 회전 */
 }
 
+.pagemove {
+  background-color: black;
+}
+
+/*하단 페이지 클릭시 이동*/
+.page-link{
+  background-color: white;
+}
+
+.page-link.pageselect {
+  background-color: orange;
+}
