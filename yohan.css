@@ -301,7 +301,8 @@ a {
 }
 
 /*하단 페이지 클릭시 이동*/
-.page-link{
+.page-link {
+  margin-top: 10px;
   background-color: white;
 }
 
