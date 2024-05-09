@@ -10,17 +10,12 @@ document.addEventListener('DOMContentLoaded', async function () {
   const nowpop = document.getElementById('nowpop');
   const historypop = document.getElementById('historypop');
   const upcoming = document.getElementById('upcoming');
-  const page1 = document.getElementById('page1');
-  const page2 = document.getElementById('page2');
-  const page3 = document.getElementById('page3');
-  const page4 = document.getElementById('page4');
-  const page5 = document.getElementById('page5');
 
   // 검색 입력란에 포커스 설정
   searchInput.focus();
   searchInput.select();
 
-  let nowpagedata = 0;
+  let pop;
 
   // 영화 검색 함수
   async function searchMovies(query) {
@@ -64,162 +59,21 @@ document.addEventListener('DOMContentLoaded', async function () {
   //사이드바 클릭시 데이터 출력
 
   nowpop.addEventListener('click', async () => {
-    let activepage = document.querySelector('.page-link.pageselect');
-    if(activepage)
-      {
-        activepage.classList.remove("pageselect");
-      }
-    page1.classList.add("pageselect");
-    await fetchPopularMovies(1);
+    await fetchPopularMovies();
   });
 
   historypop.addEventListener('click', async () => {
-    let activepage = document.querySelector('.page-link.pageselect');
-    if(activepage)
-      {
-        activepage.classList.remove("pageselect");
-      }
-    page1.classList.add("pageselect");
-    await fetchTopRatedMovies(1);
+    await fetchTopRatedMovies();
   });
 
   upcoming.addEventListener('click', async () => {
-    let activepage = document.querySelector('.page-link.pageselect');
-    if(activepage)
-      {
-        activepage.classList.remove("pageselect");
-      }
-    page1.classList.add("pageselect");
-    await fetchUpcomingMoives(1);
-  });
-
-  //하단 페이지를 클릭시 해당하는 페이지의 정보로 이동
-  page1.addEventListener('click', async () => {
-
-    //모든 pageselect를 찾아 해당하는 pageselect클래스를 지워줌
-    let activepage = document.querySelector('.page-link.pageselect');
-    if(activepage)
-      {
-        activepage.classList.remove("pageselect");
-      }
-
-    //case에 따라 리스트를 다르게 불러옴
-    page1.classList.add("pageselect");
-    switch (nowpagedata) {
-      case 0:
-        await fetchPopularMovies(1);
-        break;
-    
-      case 1:
-        await fetchUpcomingMoives(1);
-        break;
-      case 2:
-        await fetchTopRatedMovies(1);
-        break;
-      default:
-        break;
-    }
-  });
-  page2.addEventListener('click', async () => {
-    let activepage = document.querySelector('.page-link.pageselect');
-    if(activepage)
-      {
-        activepage.classList.remove("pageselect");
-      }
-
-    page2.classList.add("pageselect");
-    switch (nowpagedata) {
-      case 0:
-        await fetchPopularMovies(2);
-        break;
-    
-      case 1:
-        await fetchUpcomingMoives(2);
-        break;
-      case 2:
-        await fetchTopRatedMovies(2);
-        break;
-      default:
-        break;
-    }
-  });
-  page3.addEventListener('click', async () => {
-    let activepage = document.querySelector('.page-link.pageselect');
-    if(activepage)
-      {
-        activepage.classList.remove("pageselect");
-      }
-
-    page3.classList.add("pageselect");
-    switch (nowpagedata) {
-      case 0:
-        await fetchPopularMovies(3);
-        break;
-    
-      case 1:
-        await fetchUpcomingMoives(3);
-        break;
-      case 2:
-        await fetchTopRatedMovies(3);
-        break;
-      default:
-        break;
-    }
-  });
-
-  page4.addEventListener('click', async () => {
-    let activepage = document.querySelector('.page-link.pageselect');
-    if(activepage)
-      {
-        activepage.classList.remove("pageselect");
-      }
-
-    page4.classList.add("pageselect");
-    switch (nowpagedata) {
-      case 0:
-        await fetchPopularMovies(4);
-        break;
-    
-      case 1:
-        await fetchUpcomingMoives(4);
-        break;
-      case 2:
-        await fetchTopRatedMovies(4);
-        break;
-      default:
-        break;
-    }
-  });
-
-  page5.addEventListener('click', async () => {
-    let activepage = document.querySelector('.page-link.pageselect');
-    if(activepage)
-      {
-        activepage.classList.remove("pageselect");
-      }
-
-    page5.classList.add("pageselect");
-    switch (nowpagedata) {
-      case 0:
-        await fetchPopularMovies(5);
-        break;
-    
-      case 1:
-        await fetchUpcomingMoives(5);
-        break;
-      case 2:
-        await fetchTopRatedMovies(5);
-        break;
-      default:
-        break;
-    }
+    await fetchUpcomingMoives();
   });
 
   // 최고 평점 영화 가져오기
-  await fetchTopRatedMovies(1);
-  page1.classList.add("pageselect");
+  await fetchTopRatedMovies();
 
-  async function fetchTopRatedMovies(Pagedata) {
+  async function fetchTopRatedMovies() {
     const options = {
       method: 'GET',
       headers: {
@@ -231,12 +85,11 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${Pagedata}`,
+        'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1',
         options
       );
       const data = await response.json();
       if (data && data.results) {
-        nowpagedata = 2;
         displayMovies(data.results);
       } else {
         console.error('Invalid data format:', data);
@@ -247,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   //인기 영화 데이터
-  async function fetchPopularMovies(Pagedata) {
+  async function fetchPopularMovies() {
     const options = {
       method: 'GET',
       headers: {
@@ -259,12 +112,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${Pagedata}`,
+        'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
         options
       );
       const data = await response.json();
       if (data && data.results) {
-        nowpagedata = 0;
+        pop = data.results;
         displayMovies(data.results);
       } else {
         console.error('Invalid data format:', data);
@@ -275,7 +128,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   //인기 영화 데이터
-  async function fetchUpcomingMoives(Pagedata) {
+  async function fetchUpcomingMoives() {
     const options = {
       method: 'GET',
       headers: {
@@ -287,12 +140,12 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${Pagedata}`,
+        'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1',
         options
       );
       const data = await response.json();
       if (data && data.results) {
-        nowpagedata = 1;
+        pop = data.results;
         displayMovies(data.results);
       } else {
         console.error('Invalid data format:', data);
@@ -345,7 +198,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     //타이틀 클릭 시 URL 이동
     title.addEventListener('click', () => {
-      const googleSearchUrl = `https://www.google.com/search?q=${encodeURI(movie.title)}`; 
+      const googleSearchUrl = `https://www.google.com/search?q=${encodeURI(movie.title)}`;
       window.open(googleSearchUrl, '_blank');
     });
 
@@ -383,12 +236,11 @@ document.addEventListener('DOMContentLoaded', async function () {
         submitComment.addEventListener('click', function (event) {
 
 
-          //댓글 3개 제한
-          let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
-          if (movieComments && movieComments.length >= 3) {
-            event.preventDefault();
-            return;
-          }
+          //댓글 추가 시 칸 늘리기
+          commentDisplay.style.height = 'auto';
+
+          //댓글 입력 제한 해제
+          commentDisplay.style.overflow = 'visible';
 
           //입력값 가져오기
           const userId = document.getElementById('userId').value.trim();
@@ -396,13 +248,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           const comment = document.getElementById('commentContent').value.trim();
 
           // 현재 영화의 댓글 목록 가져오기
-          movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
-          
-          //아이디 범위 3~12글자
-          //비밀번호 범위 영어,숫자를 포함한 4~8글자
-          //댓글은 최소 3글자이상
-          let passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{4,8}$/;
-          let idRegex = /^().{3,12}$/;
+          let movieComments = JSON.parse(localStorage.getItem(movieId)) || [];
 
           // 댓글을 저장할 객체 생성
           const newComment = {
@@ -416,24 +262,6 @@ document.addEventListener('DOMContentLoaded', async function () {
             // alert('공백없이 입력하세요');
             return false;
           }
-          
-          if(!passwordRegex.test(password))
-            {
-              alert('비밀번호는 영어와 숫자를 포함해 4~8글자로 작성해주세요');
-              return false;
-            }
-
-          if(!idRegex.test(userId))
-            {
-              alert('아이디는 3~12글자로 작성해주세요');
-              return false;
-            }
-
-          if(comment.length < 3)
-            {
-              alert('댓글은 최소 3글자 이상으로 작성해주세요.');
-              return false;
-            }
 
           movieComments.push(newComment);
 
@@ -443,18 +271,16 @@ document.addEventListener('DOMContentLoaded', async function () {
 
           // submit 시 댓글 입력창 초기화
           document.getElementById('commentContent').value = '';
-  
+
           displayComments(movieId);
 
-          
-        
+
+
         });
 
         // 댓글 보여주는 함수
         function displayComments(movieId) {
           const movieComments = JSON.parse(localStorage.getItem(movieId));
-          
-          
 
           // 댓글이 있는 경우
           if (movieComments && movieComments.length > 0) {
@@ -488,6 +314,10 @@ document.addEventListener('DOMContentLoaded', async function () {
             });
           } else {
             commentDisplay.innerHTML = '등록된 댓글이 없습니다.';
+            //댓글이 없을 시 칸 초기화
+            commentDisplay.style.height = '50px';
+            //댓글이 없을 시 칸에 스크롤 없애기
+            commentDisplay.style.overflow = 'hidden';
           }
         }
 
@@ -554,7 +384,3 @@ document.addEventListener('DOMContentLoaded', async function () {
   const closePopupButton = document.querySelector('.close'); // X 버튼을 가져옴
   closePopupButton.addEventListener('click', closePopup); // X 버튼에 이벤트 핸들러 추가
 });
-
-
-
-
