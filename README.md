@@ -1,4 +1,6 @@
 떡상 가조 Team. Project 영화 사이트 제작<br/>
+메인화면<br/>
+file:///C:/Users/user/OneDrive%20-%20%ED%99%8D%EC%9D%B5%EB%8C%80%ED%95%99%EA%B5%90/%EA%B7%B8%EB%A6%BC/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7/main1.png
 떡상을 의미하는 To the moon 을 영화 사이트의 타이틀로 채용<br/>
 제목을 입력하여 원하는 영화를 search버튼 클릭 혹은 엔터키를 누르면 원하는 영화 검색이 됩니다.<br/>
 타이틀인 To the moon을 클릭하면 홈화면으로 돌아가집니다.<br/>
