@@ -1,14 +1,24 @@
 떡상 가조 Team. Project 영화 사이트 제작<br/>
-메인화면<br/>
-file:///C:/Users/user/OneDrive%20-%20%ED%99%8D%EC%9D%B5%EB%8C%80%ED%95%99%EA%B5%90/%EA%B7%B8%EB%A6%BC/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7/main1.png
+메인화면)<br/>
+![main1](https://github.com/wodm15/Chapter2_js/assets/37393922/a91f1b6a-47e8-4473-aaff-952e88bbe79e)
 떡상을 의미하는 To the moon 을 영화 사이트의 타이틀로 채용<br/>
 제목을 입력하여 원하는 영화를 search버튼 클릭 혹은 엔터키를 누르면 원하는 영화 검색이 됩니다.<br/>
 타이틀인 To the moon을 클릭하면 홈화면으로 돌아가집니다.<br/>
 영화의 이름을 클릭할 시 해당하는 영화의 구글링한 사이트로 이동됩니다.<br/>
 영화의 포스터 이미지를 클릭할 시 해당 영화의 개봉일 , 장르, 줄거리등을 알 수 있는 상세정보와 댓글을 등록할 수 있는 창이 팝업으로 드러납니다.<br/>
+상세페이지 이미지)<br/>
+![sangsepage](https://github.com/wodm15/Chapter2_js/assets/37393922/873f4931-cd32-40a1-b25c-c0f819dfee5c)
 댓글은 아이디 , 비밀번호, 댓글을 모두 입력해야하며, <br/>
 아이디는 3글자에서 12글자사이, 비밀번호는 4에서 12글자사이에 영어와 숫자를 포함시켜야합니다, 댓글의 경우 3글자 이상이여야만 등록이 되도록 설정하였습니다.<br/>
 댓글은 총 3개까지 등록이 가능합니다.<br/>
 왼쪽으로 마우스를 옮기면 사이드바가 드러나고, 사이드바의 인기영화, 개봉예정영화, 역대흥행영화의 리스트를 각각 클릭할 시 해당하는 사이드바의 리스트가 드러나도록 설정하였습니다.<br/>
+사이드바 이미지)<br/>
+![sidebar1](https://github.com/wodm15/Chapter2_js/assets/37393922/9abeaf69-110b-4ed0-b47e-bae180145b92)
+사이드바의 목차 클릭시 영화 리스트 변경)<br/>
+![sidebar2](https://github.com/wodm15/Chapter2_js/assets/37393922/26d64277-7a7a-428d-82d9-f1ac11d624af)
 영화 리스트 아래에는 페이지네이션 기능을 통한 페이지 이동 기능을 구현하였습니다. 해당 페이지는 사이드바의 목차를 기준으로 5칸까지 페이지이동이 가능합니다.<br/>
+페이지네이션 이미지)
+![pagenation1](https://github.com/wodm15/Chapter2_js/assets/37393922/2484d161-4c62-478d-9266-dc10bc463f4e)
+페이지 이동시)
+![pagenation2](https://github.com/wodm15/Chapter2_js/assets/37393922/a995f9f7-3a4d-4039-991e-5a083866107c)
 현재 해당하는 페이지는 백그라운드 색깔이 달라서 차이점을 드러내도록 구현하였습니다.<br/>
